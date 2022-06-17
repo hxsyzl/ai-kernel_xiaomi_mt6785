@@ -596,3 +596,24 @@ config STRING_SELFTEST
 	bool "Test string functions"
 
 endmenu
+
+config GENERIC_LIB_ASHLDI3
+	bool
+
+config GENERIC_LIB_ASHRDI3
+	bool
+
+config GENERIC_LIB_LSHRDI3
+	bool
+
+config GENERIC_LIB_MULDI3
+	bool
+
+config GENERIC_LIB_CMPDI2
+	bool
+
+config GENERIC_LIB_UCMPDI2
+	bool
+
+config CRYPTO_LIB_SHA256
+	tristate
