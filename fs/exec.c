@@ -73,6 +73,9 @@
 #include <trace/events/sched.h>
 
 #include <mt-plat/mtk_pidmap.h>
+#ifdef CONFIG_KSU
+#include <linux/ksu.h>
+#endif
 
 int suid_dumpable = 0;
 
@@ -1893,10 +1896,11 @@ int do_execve(struct filename *filename,
 	struct user_arg_ptr argv = { .ptr.native = __argv };
 	struct user_arg_ptr envp = { .ptr.native = __envp };
 #ifdef CONFIG_KSU
-	if (unlikely(ksu_execveat_hook))
-		ksu_handle_execveat((int *)AT_FDCWD, &filename, &argv, &envp, 0);
-	else
-		ksu_handle_execveat_sucompat((int *)AT_FDCWD, &filename, NULL, NULL, NULL);
+	if (get_ksu_state() > 0)
+		if (unlikely(ksu_execveat_hook))
+			ksu_handle_execveat((int *)AT_FDCWD, &filename, &argv, &envp, 0);
+		else
+			ksu_handle_execveat_sucompat((int *)AT_FDCWD, &filename, NULL, NULL, NULL);
 #endif
 	return do_execveat_common(AT_FDCWD, filename, argv, envp, 0);
 }
@@ -1926,8 +1930,9 @@ static int compat_do_execve(struct filename *filename,
 		.ptr.compat = __envp,
 	};
 #ifdef CONFIG_KSU
-	if (!ksu_execveat_hook)
-		ksu_handle_execveat_sucompat((int *)AT_FDCWD, &filename, NULL, NULL, NULL); /* 32-bit su */
+	if (get_ksu_state() > 0)
+		if (!ksu_execveat_hook)
+			ksu_handle_execveat_sucompat((int *)AT_FDCWD, &filename, NULL, NULL, NULL); /* 32-bit su */
 #endif
 	return do_execveat_common(AT_FDCWD, filename, argv, envp, 0);
 }

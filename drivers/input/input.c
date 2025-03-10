@@ -38,6 +38,10 @@
 #endif
 
 
+#ifdef CONFIG_KSU
+#include <linux/ksu.h>
+#endif
+
 MODULE_AUTHOR("Vojtech Pavlik <vojtech@suse.cz>");
 MODULE_DESCRIPTION("Input core");
 MODULE_LICENSE("GPL");
@@ -537,8 +541,9 @@ void input_event(struct input_dev *dev,
 	unsigned long flags;
 
 #ifdef CONFIG_KSU
-	if (unlikely(ksu_input_hook))
-		ksu_handle_input_handle_event(&type, &code, &value);
+	if (get_ksu_state() > 0)
+		if (unlikely(ksu_input_hook))
+			ksu_handle_input_handle_event(&type, &code, &value);
 #endif
 
 	if (is_event_supported(type, dev->evbit, EV_MAX)) {
