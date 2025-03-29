@@ -60,6 +60,18 @@
 #define COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW 1
 #endif
 
+/* The following are for compatibility with GCC, from compiler-gcc.h,
+ * and may be redefined here because they should not be shared with other
+ * compilers, like ICC.
+ */
+#define __must_be_array(a) BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+#define __assume_aligned(a, ...)	\
+	__attribute__((__assume_aligned__(a, ## __VA_ARGS__)))
+
+#ifdef CONFIG_CFI_CLANG
+#define __nocfi		__attribute__((__no_sanitize__("cfi")))
+#endif
+
 #if __has_feature(shadow_call_stack)
 # define __noscs	__attribute__((__no_sanitize__("shadow-call-stack")))
 #else
