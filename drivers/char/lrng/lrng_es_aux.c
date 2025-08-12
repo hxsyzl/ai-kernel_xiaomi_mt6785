@@ -8,6 +8,7 @@
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
 #include <linux/lrng.h>
+#include <crypto/hash.h>
 
 #include "lrng_es_aux.h"
 #include "lrng_es_mgr.h"

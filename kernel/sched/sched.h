@@ -1,5 +1,8 @@
 /* SPDX-License-Identifier: GPL-2.0 */
 
+#ifndef _KERNEL_SCHED_SCHED_H
+#define _KERNEL_SCHED_SCHED_H
+
 #include <linux/sched.h>
 #include <linux/sched/autogroup.h>
 #include <linux/sched/sysctl.h>
@@ -2415,3 +2418,5 @@ walt_task_in_cum_window_demand(struct rq *rq, struct task_struct *p)
 #endif
 
 #include "sched_plus.h"
+
+#endif /* _KERNEL_SCHED_SCHED_H */

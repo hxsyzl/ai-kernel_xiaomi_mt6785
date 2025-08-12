@@ -309,8 +309,4 @@ Copylength_table:
 .p2align 4
 ENTRY(_lz4_decompress_asm_noprfm)
 	lz4_decompress_asm_generic	0
-<<<<<<< HEAD
-SYM_FUNC_END(_lz4_decompress_asm_noprfm)
-=======
 ENDPROC(_lz4_decompress_asm_noprfm)
->>>>>>> 2d00b5d20a62 (lib/lz4/lz4armv8: Fix build for Linux 4.14)

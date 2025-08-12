@@ -94,7 +94,7 @@ bool static_key_fast_inc_not_disabled(struct static_key *key)
 {
 	int v;
 
-	STATIC_KEY_CHECK_USE(key);
+	STATIC_KEY_CHECK_USE();
 	/*
 	 * Negative key->enabled has a special meaning: it sends
 	 * static_key_slow_inc() down the slow path, and it is non-zero

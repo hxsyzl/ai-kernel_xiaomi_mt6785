@@ -37,7 +37,7 @@ ssize_t lrng_drng_write(struct file *file, const char __user *buffer,
 			size_t count, loff_t *ppos);
 ssize_t lrng_drng_write_common(const char __user *buffer, size_t count,
 			       u32 entropy_bits);
-__poll_t lrng_random_poll(struct file *file, poll_table *wait);
+unsigned int lrng_random_poll(struct file *file, poll_table *wait);
 ssize_t lrng_read_common_block(int nonblock, char __user *buf, size_t nbytes);
 ssize_t lrng_drng_read_block(struct file *file, char __user *buf, size_t nbytes,
 			     loff_t *ppos);
